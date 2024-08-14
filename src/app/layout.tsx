@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import Sidebar from "./components/Sidebar";
+import Followbar from "./components/Followbar";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -28,8 +29,12 @@ export default function RootLayout({
 
               <div className="col-span-3 lg:col-span-2 border-x-[1px] border-neutral-800">
                 <div >{children}</div>
-
               </div>
+
+              <div>
+                <Followbar />
+              </div>
+
             </div>
           </div>
         </div>

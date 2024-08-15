@@ -7,13 +7,13 @@ interface LoginModalStore {
 }
 
 const useLoginModal = create<LoginModalStore>((set) => ({
-    isOpen: true,
+    isOpen: false,
     onOpen: () => {
-        console.log('login modal open')
+        // console.log('login modal open')
         set({ isOpen: true })
     },
     onClose: () => {
-        console.log('login modal close')
+        // console.log('login modal close')
         set({ isOpen: false })
     }
 }))

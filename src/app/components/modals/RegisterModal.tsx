@@ -1,13 +1,13 @@
 'use client'
 
 import { useState, useCallback } from 'react'
-import useregisterModal from '@/app/hooks/useRegisterModal'
+import useRegisterModal from '@/app/hooks/useRegisterModal'
 import useLoginModal from '@/app/hooks/useLoginModal'
 import Input from '@/app/components/Input'
 import Modal from '../Modal'
 
-const registerModal = () => {
-    const registerModal = useregisterModal()
+const RegisterModal = () => {
+    const registerModal = useRegisterModal()
     const loginModal = useLoginModal()
 
     const [email, setEmail] = useState('')
@@ -22,7 +22,7 @@ const registerModal = () => {
             return;
         }
 
-        // close register modal
+        // close login modal & open register modal
         registerModal.onClose()
         loginModal.onOpen()
     }
@@ -76,7 +76,7 @@ const registerModal = () => {
     const footerContent = (
         <div className='text-neutral-400 text-center mt-4'>
             <p>Already have an account?</p>
-            <span className='text-white cursor-pointer hover:underline'>Sign in</span>
+            <span onClick={onToggle} className='text-white cursor-pointer hover:underline'>Sign in</span>
         </div>
     )
 
@@ -89,8 +89,9 @@ const registerModal = () => {
             onClose={registerModal.onClose}
             onSubmit={onSubmit}
             body={bodyContent}
+            footer={footerContent}
         />
     )
 }
 
-export default registerModal
+export default RegisterModal

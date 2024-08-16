@@ -1,11 +1,10 @@
-import bcrypt from 'bcrypt'
-import NextAuth from 'next-auth'
-import CredentialsProvider from 'next-auth/providers/credentials'
-import { PrismaAdapter } from '@next-auth/prisma-adapter'
+import bcrypt from 'bcrypt';
+import NextAuth, { AuthOptions } from 'next-auth';
+import CredentialsProvider from 'next-auth/providers/credentials';
+import { PrismaAdapter } from '@next-auth/prisma-adapter';
+import prisma from '@/app/libs/prismadb';
 
-import prisma from '@/app/libs/prismadb'
-
-const handler =  NextAuth({
+export const authOptions: AuthOptions = {
     adapter: PrismaAdapter(prisma),
     providers: [
         CredentialsProvider({
@@ -16,7 +15,7 @@ const handler =  NextAuth({
             },
             async authorize(credentials) {
                 if (!credentials?.email || !credentials?.password) {
-                    throw new Error('Missing credentials')
+                    throw new Error('Missing credentials');
                 }
 
                 const user = await prisma.user.findUnique({
@@ -26,7 +25,7 @@ const handler =  NextAuth({
                 });
 
                 if (!user || !user?.hashedPassword) {
-                    throw new Error('Invalid credentials')
+                    throw new Error('Invalid credentials');
                 }
 
                 const isCorrectPassword = await bcrypt.compare(
@@ -35,7 +34,7 @@ const handler =  NextAuth({
                 );
 
                 if (!isCorrectPassword) {
-                    throw new Error('Invalid credentials')
+                    throw new Error('Invalid credentials');
                 }
                 
                 return user;
@@ -50,6 +49,8 @@ const handler =  NextAuth({
         secret: process.env.NEXTAUTH_JWT_SECRET
     },
     secret: process.env.NEXTAUTH_SECRET
-})
+};
 
-export { handler as GET, handler as POST }
+const handler = NextAuth(authOptions);
+
+export { handler as GET, handler as POST };

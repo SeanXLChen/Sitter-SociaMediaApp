@@ -22,7 +22,7 @@ export async function GET(req: Request) {
             return NextResponse.json({ error: "Not signed in" }, { status: 401 });
         }
 
-        return NextResponse.json({ currentUser });
+        return NextResponse.json(currentUser);
     } catch (error) {
         console.error("An error occurred:", error);
         return NextResponse.json({ error: "Internal server error" }, { status: 500 });

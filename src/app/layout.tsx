@@ -8,6 +8,7 @@ import RegisterModal from "./components/modals/RegisterModal";
 import { Toaster } from "react-hot-toast";
 import { Session } from "inspector";
 import { NextAuthProvider } from "./components/NextAuthProvider";
+import EditModal from "./components/modals/EditModal";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -25,7 +26,8 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <NextAuthProvider>
-
+          <Toaster />
+          <EditModal />
           <LoginModal />
           <RegisterModal />
 

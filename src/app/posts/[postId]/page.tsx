@@ -2,6 +2,7 @@
 
 import Form from "@/app/components/Form"
 import Header from "@/app/components/Header"
+import CommentFeed from "@/app/components/post/CommentFeed"
 import PostItem from "@/app/components/post/PostItem"
 import usePost from "@/app/hooks/usePost"
 import { useRouter } from "next/navigation"
@@ -33,6 +34,7 @@ const page = ({ params, }: { params: { postId: string } }) => {
         isComment
         placeholder="Tweet your reply"
       />
+      <CommentFeed comments={fetchedPost?.comments} />
     </>
   )
 }

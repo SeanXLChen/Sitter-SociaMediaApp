@@ -1,6 +1,6 @@
 # write markdown for README.md
 
-## Y , a clone of social media app
+## Sitter , a clone of social media app
 
 ## Description
 Y is a clone of social media app t w i t t e r, where users can post and interact with each other. Users can follow each other, like and comment on posts.

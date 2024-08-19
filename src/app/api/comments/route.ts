@@ -22,6 +22,35 @@ export async function POST(req: NextRequest) {
       },
     });
 
+    // 发送 notification
+    try {
+      const post = await prisma.post.findUnique({
+        where: {
+          id: postId,
+        },
+      });
+
+      if (post?.userId) {
+        await prisma.notification.create({
+          data: {
+            body: 'Someone commented on your tweet',
+            userId: post.userId,
+          },
+        });
+
+        await prisma.user.update({
+          where: {
+            id: post.userId,
+          },
+          data: {
+            hasNotification: true,
+          },
+        });
+      }
+    } catch (error) {
+      console.error(error);
+    }
+
     return NextResponse.json(comment);
   } catch (error) {
     console.error(error);

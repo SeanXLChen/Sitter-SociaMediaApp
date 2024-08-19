@@ -5,11 +5,9 @@ import Header from "@/app/components/Header"
 import CommentFeed from "@/app/components/post/CommentFeed"
 import PostItem from "@/app/components/post/PostItem"
 import usePost from "@/app/hooks/usePost"
-import { useRouter } from "next/navigation"
 import { ClipLoader } from "react-spinners"
 
-const page = ({ params, }: { params: { postId: string } }) => {
-  const router = useRouter()
+const Posts = ({ params, }: { params: { postId: string } }) => {
   const { data: fetchedPost, isLoading } = usePost(params.postId)
 
   if (isLoading || !fetchedPost) {
@@ -39,4 +37,4 @@ const page = ({ params, }: { params: { postId: string } }) => {
   )
 }
 
-export default page
+export default Posts

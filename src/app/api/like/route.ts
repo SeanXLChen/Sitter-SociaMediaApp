@@ -28,6 +28,36 @@ export async function POST(req: NextRequest) {
     // 如果 POST 方法被调用，意味着用户点赞该帖子
     updatedLikedIds.push(currentUser.id);
 
+    // 发送notification 
+    try {
+      const post = await prisma.post.findUnique({
+        where: {
+          id: postId,
+        },
+      });
+
+      if (post?.userId) {
+        await prisma.notification.create({
+          data: {
+            body: 'Someone liked your tweet',
+            userId: post.userId,
+          }
+        });
+
+        await prisma.user.update({
+          where: {
+            id: post.userId,
+          },
+          data: {
+            hasNotification: true,
+          },
+        });
+      }
+
+    } catch (error) {
+      console.error(error);
+    }
+
     // 更新帖子记录
     const updatedPost = await prisma.post.update({
       where: { id: postId },
